@@ -1,0 +1,6 @@
+﻿namespace TestModule.Model.Interface
+{
+    interface IPod : ICell
+	{
+    }
+}

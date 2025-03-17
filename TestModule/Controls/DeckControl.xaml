@@ -1,0 +1,129 @@
+﻿<UserControl x:Class="TestModule.Controls.DeckControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TestModule.Controls"
+             xmlns:converters="clr-namespace:TestModule.Converters"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="850" d:DesignWidth="1500"
+             d:DataContext="{d:DesignInstance {x:Type local:DeckControlVm}}">
+    <UserControl.Resources>
+        <converters:PositionerXOffsetConverter x:Key="PositionerXOffsetConverter" />
+        <converters:PositionerYOffsetConverter  x:Key="PositionerYOffsetConverter" />
+        <converters:LabwareNumToVisibilityConverter x:Key="LabwareNumToVisibilityConverter" />
+        <converters:PositionerTypeEnumToColorConverter x:Key="PositionerTypeEnumToColorConverter" />
+        <converters:SubStringConverter  x:Key="SubStringConverter" />
+
+        <ControlTemplate x:Key="TransParentButton" TargetType="{x:Type Button}">
+            <Border x:Name="border" Background="Transparent " BorderBrush="{TemplateBinding BorderBrush }" 
+                    CornerRadius="7"
+                    BorderThickness="{TemplateBinding BorderThickness }" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Resources>
+    <Grid Background="AliceBlue">
+        <ItemsControl Name="myUserControl" ItemsSource ="{Binding  DeckProperty.CellVms,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+          AllowDrop="True" Background="Transparent ">
+            <ItemsControl.ItemsPanel >
+                <ItemsPanelTemplate >
+                    <Canvas Width="{Binding DeckProperty.XLength}" Height="{Binding DeckProperty.YLength}" Background="Transparent "/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="Canvas.Left" Value="{Binding PositionX, Converter ={StaticResource PositionerXOffsetConverter}, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged }" />
+                    <Setter Property="Canvas.Top" Value="{Binding  PositionY,Converter ={StaticResource PositionerYOffsetConverter},Mode=TwoWay ,UpdateSourceTrigger =PropertyChanged }"/>
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+            <ItemsControl.ItemTemplate >
+                <DataTemplate >
+                    <Grid Background="White  ">
+
+                        <!--模块在画布上的大小-->
+                        <Border  Background="White "  UseLayoutRounding="True "  BorderThickness="1" CornerRadius="5"
+                                 Width="{Binding BoxSizeX}" Height="{Binding BoxSizeY}" >
+                            <Border.Effect >
+                                <!--<DropShadowEffect BlurRadius="8"  ShadowDepth="0" Color="#1765A7" Opacity="0.3"/>-->
+                                <DropShadowEffect BlurRadius="8"  ShadowDepth="0" Color="#1765A7" Opacity="0.3"/>
+                            </Border.Effect>
+                        </Border >
+                        
+                        <!--板位的大小-->
+                        <Border Background="CornflowerBlue" AllowDrop="True" UseLayoutRounding="True "  BorderThickness="1" CornerRadius="5"
+                                Width="{Binding X}" Height="{Binding Y}" >
+                            <Grid Background ="Transparent ">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="2.5*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Viewbox Grid.Row="1" Grid.RowSpan="2" >
+                                    <TextBlock Text="{Binding Name,Converter={StaticResource SubStringConverter}}"/>
+                                </Viewbox>
+                                <Border Grid.Row="2" Background="#555"  Opacity="0.7" CornerRadius ="0,0,5,5">
+                                    <TextBlock  Text="{Binding  CellEnumString,Converter={StaticResource SubStringConverter}}" HorizontalAlignment="Center " VerticalAlignment="Center " Foreground="White" Opacity="1" FontSize="18"/>
+                                </Border>
+
+                            </Grid>
+                        </Border>
+
+                        <Button Template ="{StaticResource TransParentButton}"  Background="Transparent " OpacityMask="Yellow"
+                                BorderBrush ="#4CC6AB" BorderThickness="2"
+                                AllowDrop ="True "  PreviewMouseDown="Button_PreviewMouseDown">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="Drop">
+                                    <b:InvokeCommandAction Command="{Binding Path=DataContext.DropCommand ,RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType =UserControl  }}"
+                                                           PassEventArgsToCommand="True"
+                                                           CommandParameter ="{Binding}"/>
+                                </b:EventTrigger>
+                                <b:EventTrigger EventName="MouseDoubleClick">
+                                    <b:InvokeCommandAction Command="{Binding Path=DataContext.DoubleClickCommand ,RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType =UserControl  }}"
+                                                           PassEventArgsToCommand="True"
+                                                           CommandParameter ="{Binding}"/>
+                                </b:EventTrigger>
+                                <b:EventTrigger EventName="MouseEnter">
+                                    <b:InvokeCommandAction Command="{Binding Path=DataContext.MouseEnterCommand ,RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType =UserControl}}"
+                                                                   PassEventArgsToCommand="True"
+                                                                   CommandParameter ="{Binding}"/>
+                                </b:EventTrigger>
+                                <b:EventTrigger EventName="MouseLeave">
+                                    <b:InvokeCommandAction Command="{Binding Path=DataContext.MouseLeaveCommand ,RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType =UserControl}}"
+                                                           PassEventArgsToCommand="True"
+                                                           CommandParameter ="{Binding}"/>
+                                </b:EventTrigger>
+                                <b:EventTrigger EventName="PreviewMouseLeftButtonUp">
+                                    <b:InvokeCommandAction Command="{Binding Path=DataContext.PreviewMouseLeftButtonUp ,RelativeSource={RelativeSource Mode=FindAncestor ,AncestorType =UserControl}}"
+                                                           PassEventArgsToCommand="True"
+                                                           CommandParameter ="{Binding}"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+
+
+                            <Button.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="更改"  ItemsSource="{Binding CellsList,UpdateSourceTrigger=PropertyChanged}">
+                                        <MenuItem.ItemContainerStyle>
+                                            <Style TargetType="MenuItem">
+                                                <Setter Property="Header" Value="{Binding }"/>
+                                                <Setter Property="Command" Value="{Binding DataContext.ReplaceItemCommand,RelativeSource ={RelativeSource Mode=FindAncestor ,AncestorType =UserControl}}"/>
+                                                <Setter Property="CommandParameter" Value="{Binding}"/>
+                                                <Setter Property="Margin" Value="4 -1 4 0"/>
+                                            </Style>
+                                        </MenuItem.ItemContainerStyle>
+                                    </MenuItem>
+                                    <MenuItem Header="删除" Command="{Binding DeleteItemCommand}">
+
+                                    </MenuItem>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>
