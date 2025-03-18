@@ -7,9 +7,22 @@ using TestModule.Model.Interface;
 
 namespace TestModule.Model.ImClass;
 
-public class Pod : ICell
+public class Pod : IPod
 {
-	#region Implementation of IBaseInfo
+	#region Implementation of ICell
+
+	public double CellPositionX { get; set; }
+	public double CellPositionY { get; set; }
+	public double CellX { get; set; }
+	public double CellY { get; set; }
+	public double CellMarginX { get; set; }
+	public double CellMarginY { get; set; }
+	public string CellName { get; set; }
+	public CellEnum CellEnum { get; set; }
+
+	#endregion
+
+	#region Implementation of IEntityInfo
 
 	/// <summary>
 	/// X轴长度
@@ -29,7 +42,7 @@ public class Pod : ICell
 	/// <summary>
 	/// 类型
 	/// </summary>
-	public CellEnum CellTypeEnum { get; set; } = CellEnum.Pod;
+	public CellEnum EntifyEnum { get; set; }
 
 	#endregion
 }

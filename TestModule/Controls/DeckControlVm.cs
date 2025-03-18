@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
+using TestModule.Model.Interface;
 using TestModule.Vms;
 
 namespace TestModule.Controls
@@ -13,9 +14,9 @@ namespace TestModule.Controls
 	{
 		private DeckVm _deckProperty;
 
-		public DeckControlVm()
+		public DeckControlVm(IDeck deck)
 		{
-			DeckProperty = new DeckVm();
+			DeckProperty = new DeckVm(deck);
 		}
 
 		public DeckVm DeckProperty

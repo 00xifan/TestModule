@@ -1,6 +1,6 @@
 ﻿namespace TestModule.Model.Interface
 {
-	interface IBaseInfo
+	interface IEntityInfo
 	{
 		/// <summary>
 		/// X轴长度
@@ -20,7 +20,7 @@
 		/// <summary>
 		/// 类型
 		/// </summary>
-		CellEnum CellTypeEnum { get; set; }
+		CellEnum EntifyEnum { get; set; }
 
 
 	}

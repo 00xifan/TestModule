@@ -1,6 +1,6 @@
 ﻿namespace TestModule.Model.Interface
 {
-    interface IPlate : ICell
+    interface IPlate : ICell,IEntityInfo
 	{
 
     }

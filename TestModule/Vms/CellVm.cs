@@ -8,44 +8,48 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using TestModule.Model;
 using TestModule.Model.ImClass;
+using TestModule.Model.Interface;
 
 namespace TestModule.Vms
 {
    public class CellVm :ObservableObject
 	{
-		private double _x;
-		private double _y;
+		private double _cellX;
+		private double _cellY;
 		private string _name;
 		private CellEnum _cellTypeEnum;
-		private double _positionX;
-		private double _positionY;
+		private double _cellPositionX;
+		private double _cellPositionY;
 		private double _boxSizeX;
 		private double _boxSizeY;
 
-		public CellVm()
+		public CellVm(ICell cell)
 		{
-			//X = cell.X;
-			//Y = cell.Y;
-			//Name = cell.Name;
-			//CellTypeEnum = cell.CellTypeEnum;
+			CellPositionX = cell.CellPositionX;
+			CellPositionY = cell.CellPositionY;
+			CellX = cell.CellX;
+			CellY = cell.CellY;
+			Name = cell.CellName;
+			CellTypeEnum = cell.CellEnum;
+
 		}
 
 		/// <summary>
 		/// 在台面上的位置X
 		/// </summary>
-		public double PositionX
+		public double CellPositionX
 		{
-			get => _positionX;
-			set => SetProperty(ref _positionX, value);
+			get => _cellPositionX;
+			set => SetProperty(ref _cellPositionX, value);
 		}
 
 		/// <summary>
 		/// 在台面上的位置Y
 		/// </summary>
-		public double PositionY
+		public double CellPositionY
 		{
-			get => _positionY;
-			set => SetProperty(ref _positionY, value);
+			get => _cellPositionY;
+			set => SetProperty(ref _cellPositionY, value);
 		}
 
 		/// <summary>
@@ -69,19 +73,19 @@ namespace TestModule.Vms
 		/// <summary>
 		/// X轴长度
 		/// </summary>
-		public double X
+		public double CellX
 		{
-			get => _x;
-			set => SetProperty(ref _x, value);
+			get => _cellX;
+			set => SetProperty(ref _cellX, value);
 		}
 
 		/// <summary>
 		/// Y轴长度
 		/// </summary>
-		public double Y
+		public double CellY
 		{
-			get => _y;
-			set => SetProperty(ref _y, value);
+			get => _cellY;
+			set => SetProperty(ref _cellY, value);
 		}
 
 		/// <summary>

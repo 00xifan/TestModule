@@ -1,6 +1,6 @@
 ﻿namespace TestModule.Model.Interface
 {
-    interface IPod : ICell
+    interface IPod : ICell,IEntityInfo
 	{
     }
 }

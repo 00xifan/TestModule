@@ -5,11 +5,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:TestModule.Controls"
              xmlns:tabVms="clr-namespace:TestModule.Vms.TabVms"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              d:DataContext="{d:DesignInstance {x:Type tabVms:TabInitVm}}">
-    <Grid Background="LightGray">
-        <!--初始化 X144 Y70 五行7列-->
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Loaded">
+            <b:InvokeCommandAction Command="{Binding ViewLoadCommand}"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+        <Grid Background="LightGray">
         <Viewbox >
             <controls:DeckControl DataContext ="{Binding InitDeckVm,Mode=TwoWay}"/>
         </Viewbox>

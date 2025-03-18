@@ -34,15 +34,16 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
                 <Style>
-                    <Setter Property="Canvas.Left" Value="{Binding PositionX, Converter ={StaticResource PositionerXOffsetConverter}, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged }" />
-                    <Setter Property="Canvas.Top" Value="{Binding  PositionY,Converter ={StaticResource PositionerYOffsetConverter},Mode=TwoWay ,UpdateSourceTrigger =PropertyChanged }"/>
+
+                    <Setter Property="Canvas.Left" Value="{Binding CellPositionX, Converter ={StaticResource PositionerXOffsetConverter}, Mode=TwoWay ,UpdateSourceTrigger=PropertyChanged }" />
+                    <Setter Property="Canvas.Top" Value="{Binding  CellPositionY,Converter ={StaticResource PositionerYOffsetConverter},Mode=TwoWay ,UpdateSourceTrigger =PropertyChanged }"/>
                 </Style>
             </ItemsControl.ItemContainerStyle>
             <ItemsControl.ItemTemplate >
                 <DataTemplate >
                     <Grid Background="White  ">
 
-                        <!--模块在画布上的大小-->
+                        <!--Cell在画布上的大小,CellX,CellY-->
                         <Border  Background="White "  UseLayoutRounding="True "  BorderThickness="1" CornerRadius="5"
                                  Width="{Binding BoxSizeX}" Height="{Binding BoxSizeY}" >
                             <Border.Effect >
@@ -51,9 +52,9 @@
                             </Border.Effect>
                         </Border >
                         
-                        <!--板位的大小-->
+                        <!--Box的大小-->
                         <Border Background="CornflowerBlue" AllowDrop="True" UseLayoutRounding="True "  BorderThickness="1" CornerRadius="5"
-                                Width="{Binding X}" Height="{Binding Y}" >
+                                Width="{Binding CellX}" Height="{Binding CellY}" >
                             <Grid Background ="Transparent ">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*"/>

@@ -7,9 +7,9 @@ using TestModule.Model.Interface;
 
 namespace TestModule.Model.ImClass
 {
-	public class Device : ICell
+	public class Device : IDevice
 	{
-	    #region Implementation of IBaseInfo
+	    #region Implementation of IEntityInfo
 
 	    /// <summary>
 	    /// X轴长度
@@ -29,8 +29,21 @@ namespace TestModule.Model.ImClass
 	    /// <summary>
 	    /// 类型
 	    /// </summary>
-	    public CellEnum CellTypeEnum { get; set; } = CellEnum.Device;
+	    public CellEnum EntifyEnum { get; set; } = CellEnum.Device;
 
 	    #endregion
-    }
+
+	    #region Implementation of ICell
+
+	    public double CellPositionX { get; set; }
+	    public double CellPositionY { get; set; }
+	    public double CellX { get; set; }
+	    public double CellY { get; set; }
+	    public double CellMarginX { get; set; }
+	    public double CellMarginY { get; set; }
+	    public string CellName { get; set; }
+	    public CellEnum CellEnum { get; set; }
+
+	    #endregion
+	}
 }

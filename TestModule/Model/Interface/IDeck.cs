@@ -7,11 +7,12 @@ using TestModule.Model.ImClass;
 
 namespace TestModule.Model.Interface
 {
-    interface IDeck
+	public interface IDeck
     {
         double DeckX { get; set; }
         double DeckY { get; set; }
-
         List<Cell> Cells { get; set; }
+        IDeck InitDeck();
     }
 }
+

@@ -1,6 +1,6 @@
 ﻿namespace TestModule.Model.Interface
 {
-    interface IDevice :ICell
+    interface IDevice :ICell,IEntityInfo
     {
     }
 }
